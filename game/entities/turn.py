@@ -1,10 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-from ..phases import Phase
-from .pet import Pet
-from .player import Player
-from .shop import Shop
+from .phases import Phase
 
 logger = logging.getLogger(__name__)
 
