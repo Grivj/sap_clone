@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import pygame
 
 from .entities import Pet, Player, Shop, Turn
-from .phases import BuyingPhase, CombatPhase
+from .entities.phases import BuyingPhase, CombatPhase
 
 logger = logging.getLogger(__name__)
 

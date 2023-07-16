@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-from ..entities import Player, Shop
+from ...entities import Player, Shop
 
 logger = logging.getLogger(__name__)
 
