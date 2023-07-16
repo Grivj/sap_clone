@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 import pygame
 
-from .entities import Pet, Player, Shop, Turn
+from .entities import Player, Turn
 from .entities.phases import BuyingPhase, CombatPhase
 
 logger = logging.getLogger(__name__)
@@ -23,13 +23,6 @@ class Game:
 
         # Initialize the entities
         self.player = Player()
-        self.shop = Shop(
-            pets=[
-                Pet("Ant", attack=3, health=2, abilities=[]),
-                Pet("Bird", attack=2, health=3, abilities=[]),
-                Pet("Small Dog", attack=1, health=4, abilities=[]),
-            ]
-        )
         logger.info("Initialized game")
 
     def handle_events(self):
@@ -53,13 +46,15 @@ class Game:
     def run(self):
         # Main game loop
         running = True
+        turn_number = 1
         while running:
             # Create a new turn
             turn = Turn(
+                turn_number,
                 [
-                    BuyingPhase(self.player, self.shop),
+                    BuyingPhase(self.player),
                     CombatPhase(self.player),
-                ]
+                ],
             )
             # Run the phases of the turn
             turn.run()
