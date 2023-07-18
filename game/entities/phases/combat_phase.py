@@ -42,8 +42,9 @@ class CombatPhase:
         """One round of attacks between two pets."""
         # While both pets are alive, they attack each other
         while player_pet.health > 0 and ai_pet.health > 0:
-            ai_pet.health -= player_pet.attack
-            player_pet.health -= ai_pet.attack
+            # Pets' health cannot go below 0
+            ai_pet.health = max(0, ai_pet.health - player_pet.attack)
+            player_pet.health = max(0, player_pet.health - ai_pet.attack)
             logger.info(f"{player_pet.name} ❤️{player_pet.health}")
             logger.info(f"{ai_pet.name} ❤️{ai_pet.health}")
 
