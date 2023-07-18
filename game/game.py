@@ -59,7 +59,13 @@ class Game:
             # Run the phases of the turn
             turn.run()
 
-            running = False
+            # Check for the end of the game
+            if self.player.score >= 10:
+                logger.info("🥇 Player has won the game!")
+                running = False
+            elif self.player.lives <= 0:
+                logger.info("💀 Player has lost the game.")
+                running = False
 
             # running = self.handle_events()
             # self.update()

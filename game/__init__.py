@@ -1,2 +1,7 @@
+from .entities.pet import Pet  # type: ignore[not-used]
+from .entities.phases import Phase  # type: ignore[not-used]
+from .entities.player import Player  # type: ignore[not-used]
+from .entities.shop import Shop  # type: ignore[not-used]
+from .entities.turn import Turn  # type: ignore[not-used]
+from .events.event import Event  # type: ignore[not-used]
 from .game import Game  # type: ignore[not-used]
-from .events.event import Event # type: ignore[not-used]

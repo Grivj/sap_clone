@@ -59,10 +59,10 @@ class CombatPhase:
         """Determine the winner of the combat phase."""
         if len(self.player.pets) > len(ai_team):
             self.player.score += 1  # Player wins the round
-            logger.info("Player wins the round")
+            logger.info(f"Player wins the round, score: 🪙{self.player.score}")
         elif len(self.player.pets) < len(ai_team):
             self.player.lives -= 1  # Player loses the round
-            logger.info("Player loses the round")
+            logger.info(f"Player loses the round, lives: ❤️{self.player.lives}")
         else:
             logger.info(
                 "Combat phase ended with a tie"
