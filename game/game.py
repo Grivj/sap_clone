@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 import pygame
 
-from .entities import Player, Turn
+from .entities import Pet, Player, Turn
 from .entities.phases import BuyingPhase, CombatPhase
 
 logger = logging.getLogger(__name__)
@@ -17,59 +17,37 @@ class Game:
         # Initialize Pygame and set up the display window
         pygame.init()
         self.screen = pygame.display.set_mode(self.screen_size)
-
-        # Initialize the game state
-        self.state = None  # TODO: Replace with actual game state
+        # Draw a white background color onto the screen
+        self.screen.fill((255, 255, 255))
 
         # Initialize the entities
         self.player = Player()
+
+        # Initialize with the starting phase
+        self.phase = BuyingPhase(self.player)
+        self.turn_number = 1
+
         logger.info("Initialized game")
+        self.running: bool = True
 
     def handle_events(self):
-        # Process all events from the event queue
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return False  # Signal to exit the game
+                logger.info("Quitting game")
+                self.running = False
 
-            # TODO: Handle other events (like user input)
+            self.phase.handle_event(event)
 
-        return True  # Continue the game
-
-    def update(self):
-        # Update the game state
-        pass  # TODO: Implement this
-
-    def draw(self):
-        # Draw the current game state onto the screen
-        pass  # TODO: Implement this
+    def is_end_of_game(self):
+        # Check for the end of the game
+        if self.player.score >= 10:
+            logger.info("🥇 Player has won the game!")
+            self.running = False
+        elif self.player.lives <= 0:
+            logger.info("💀 Player has lost the game.")
 
     def run(self):
-        # Main game loop
-        running = True
-        turn_number = 1
-        while running:
-            # Create a new turn
-            turn = Turn(
-                turn_number,
-                [
-                    BuyingPhase(self.player),
-                    CombatPhase(self.player),
-                ],
-            )
-            # Run the phases of the turn
-            turn.run()
-
-            # Check for the end of the game
-            if self.player.score >= 10:
-                logger.info("🥇 Player has won the game!")
-                running = False
-            elif self.player.lives <= 0:
-                logger.info("💀 Player has lost the game.")
-                running = False
-
-            # running = self.handle_events()
-            # self.update()
-            # self.draw()
-            # pygame.display.flip()  # Update the display
-
+        self.phase.execute(self.screen, self.turn_number)
+        while self.running:
+            self.handle_events()
         pygame.quit()
